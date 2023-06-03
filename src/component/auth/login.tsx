@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 // import Head from 'next/head';
 // import NextLink from 'next/link';
 // import { useRouter } from 'next/navigation';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
   Alert,
   Box,
@@ -14,32 +14,35 @@ import {
   Tab,
   Tabs,
   TextField,
-  Typography
-} from '@mui/material';
+  Typography,
+} from "@mui/material";
 // import { useAuth } from 'src/hooks/use-auth';
 // import { Layout as AuthLayout } from 'src/layouts/auth/layout';
-import Helmet from "react-helmet"
+import Helmet from "react-helmet";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth-context";
 
 const LoginPage = () => {
-//   const router = useRouter();
-//   const auth = useAuth();
-  const [method, setMethod] = useState('email');
+  //   const router = useRouter();
+  //   const auth = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const auth = useAuth();
+
+  const [method, setMethod] = useState("email");
   const formik = useFormik({
     initialValues: {
-      email: 'test@gmail.com',
-      password: 'test',
-      submit: null
+      email: "test@gmail.com",
+      password: "test",
+      submit: null,
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
+      email: Yup.string()
+        .email("Must be a valid email")
         .max(255)
-        .required('Email is required'),
-      password: Yup
-        .string()
-        .max(255)
-        .required('Password is required')
+        .required("Email is required"),
+      password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (values, helpers) => {
       // try {
@@ -50,62 +53,62 @@ const LoginPage = () => {
       //   helpers.setErrors({ submit: err.message });
       //   helpers.setSubmitting(false);
       // }
-    }
+
+      auth.login(values.email, () => {
+        /** Send them back to the page they tried to visit when they were
+        redirected to the login page. Use { replace: true } so we don't create
+        another entry in the history stack for the login page.  This means that
+        when they get to the protected page and click the back button, they
+        won't end up back on the login page, which is also really nice for the
+        user experience. */
+
+        navigate("/dashboard", { replace: true });
+      });
+    },
   });
 
-//   const handleMethodChange = useCallback(
-//     (event, value) => {
-//       setMethod(value);
-//     },
-//     []
-//   );
+  //   const handleMethodChange = useCallback(
+  //     (event, value) => {
+  //       setMethod(value);
+  //     },
+  //     []
+  //   );
 
-//   const handleSkip = useCallback(
-//     () => {
-//       auth.skip();
-//       router.push('/');
-//     },
-//     [auth, router]
-//   );
+  //   const handleSkip = useCallback(
+  //     () => {
+  //       auth.skip();
+  //       router.push('/');
+  //     },
+  //     [auth, router]
+  //   );
 
   return (
     <>
       <Helmet>
-        <title>
-          Login | Patient Management
-        </title>
+        <title>Login | Patient Management</title>
       </Helmet>
       <Box
         sx={{
-          backgroundColor: 'background.paper',
-          flex: '1 1 auto',
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center'
+          backgroundColor: "background.paper",
+          flex: "1 1 auto",
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Box
           sx={{
             maxWidth: 550,
             px: 3,
-            py: '100px',
-            width: '100%'
+            py: "100px",
+            width: "100%",
           }}
         >
           <div>
-            <Stack
-              spacing={1}
-              sx={{ mb: 3 }}
-            >
-              <Typography variant="h4">
-                Login
-              </Typography>
-              <Typography
-                color="text.secondary"
-                variant="body2"
-              >
-                Don&apos;t have an account?
-                &nbsp;
+            <Stack spacing={1} sx={{ mb: 3 }}>
+              <Typography variant="h4">Login</Typography>
+              <Typography color="text.secondary" variant="body2">
+                Don&apos;t have an account? &nbsp;
                 <Link
                   component={Link}
                   href="/auth/register"
@@ -130,56 +133,49 @@ const LoginPage = () => {
                 value="phoneNumber"
               />
             </Tabs> */}
-              <form
-                noValidate
-                onSubmit={formik.handleSubmit}
-              >
-                <Stack spacing={3}>
-                  <TextField
-                    error={!!(formik.touched.email && formik.errors.email)}
-                    fullWidth
-                    helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
-                    name="email"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="email"
-                    value={formik.values.email}
-                  />
-                  <TextField
-                    error={!!(formik.touched.password && formik.errors.password)}
-                    fullWidth
-                    helperText={formik.touched.password && formik.errors.password}
-                    label="Password"
-                    name="password"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="password"
-                    value={formik.values.password}
-                  />
-                </Stack>
-                {/* <FormHelperText sx={{ mt: 1 }}>
+            <form noValidate onSubmit={formik.handleSubmit}>
+              <Stack spacing={3}>
+                <TextField
+                  error={!!(formik.touched.email && formik.errors.email)}
+                  fullWidth
+                  helperText={formik.touched.email && formik.errors.email}
+                  label="Email Address"
+                  name="email"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="email"
+                  value={formik.values.email}
+                />
+                <TextField
+                  error={!!(formik.touched.password && formik.errors.password)}
+                  fullWidth
+                  helperText={formik.touched.password && formik.errors.password}
+                  label="Password"
+                  name="password"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="password"
+                  value={formik.values.password}
+                />
+              </Stack>
+              {/* <FormHelperText sx={{ mt: 1 }}>
                   Optionally you can skip.
                 </FormHelperText> */}
-                {formik.errors.submit && (
-                  <Typography
-                    color="error"
-                    sx={{ mt: 3 }}
-                    variant="body2"
-                  >
-                    {formik.errors.submit}
-                  </Typography>
-                )}
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  type="submit"
-                  variant="contained"
-                >
-                  Continue
-                </Button>
-                {/* <Button
+              {formik.errors.submit && (
+                <Typography color="error" sx={{ mt: 3 }} variant="body2">
+                  {formik.errors.submit}
+                </Typography>
+              )}
+              <Button
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+              >
+                Continue
+              </Button>
+              {/* <Button
                   fullWidth
                   size="large"
                   sx={{ mt: 3 }}
@@ -187,7 +183,7 @@ const LoginPage = () => {
                 >
                   Skip authentication
                 </Button> */}
-                {/* <Alert
+              {/* <Alert
                   color="primary"
                   severity="info"
                   sx={{ mt: 3 }}
@@ -196,14 +192,12 @@ const LoginPage = () => {
                     You can use <b>demo@devias.io</b> and password <b>Password123!</b>
                   </div>
                 </Alert> */}
-              </form>
+            </form>
           </div>
         </Box>
       </Box>
     </>
   );
 };
-
-
 
 export default LoginPage;

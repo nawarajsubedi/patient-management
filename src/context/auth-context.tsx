@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -33,3 +33,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
+export function useAuth() {
+  return React.useContext(AuthContext);
+}
