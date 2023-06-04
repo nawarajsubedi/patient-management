@@ -5,10 +5,10 @@ import {
   Shadows,
   createTheme as createMuiTheme,
 } from "@mui/material";
-import { createPalette } from "./create-palette";
-import { createComponents } from "./create-components";
-import { createShadows } from "./create-shadows";
-import { createTypography } from "./create-typography";
+import { createPalette } from "./createPalette";
+import { createComponents } from "./createComponents";
+import { createShadows } from "./createShadows";
+import { createTypography } from "./createTypography";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 export function createTheme() {

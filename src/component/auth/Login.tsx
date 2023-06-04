@@ -1,42 +1,37 @@
-import { useCallback, useState } from "react";
-// import Head from 'next/head';
-// import NextLink from 'next/link';
-// import { useRouter } from 'next/navigation';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
   Alert,
   Box,
   Button,
-  FormHelperText,
   Link,
   Stack,
-  Tab,
-  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-// import { useAuth } from 'src/hooks/use-auth';
-// import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import Helmet from "react-helmet";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth-context";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 const LoginPage = () => {
-  //   const router = useRouter();
-  //   const auth = useAuth();
-
   const navigate = useNavigate();
-  const location = useLocation();
   const auth = useAuth();
 
-  const [method, setMethod] = useState("email");
+  const initialValues: FormValues = {
+    email: "test@gmail.com",
+    password: "Test@123",
+  };
+
+  const [submitError, setSubmitError] = useState<string | undefined>("");
+
   const formik = useFormik({
-    initialValues: {
-      email: "test@gmail.com",
-      password: "test",
-      submit: null,
-    },
+    initialValues: initialValues,
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Must be a valid email")
@@ -45,42 +40,18 @@ const LoginPage = () => {
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (values, helpers) => {
-      // try {
-      //   await auth.signIn(values.email, values.password);
-      //   router.push('/');
-      // } catch (err) {
-      //   helpers.setStatus({ success: false });
-      //   helpers.setErrors({ submit: err.message });
-      //   helpers.setSubmitting(false);
-      // }
-
-      auth.login(values.email, () => {
-        /** Send them back to the page they tried to visit when they were
-        redirected to the login page. Use { replace: true } so we don't create
-        another entry in the history stack for the login page.  This means that
-        when they get to the protected page and click the back button, they
-        won't end up back on the login page, which is also really nice for the
-        user experience. */
-
-        navigate("/dashboard", { replace: true });
-      });
+      try {
+        const response = await auth.login(values.email, values.password);
+        if (response.success) {
+          navigate("/dashboard", { replace: true });
+        } else {
+          setSubmitError(response.error?.message);
+        }
+      } catch (err) {
+        setSubmitError("Error occurred");
+      }
     },
   });
-
-  //   const handleMethodChange = useCallback(
-  //     (event, value) => {
-  //       setMethod(value);
-  //     },
-  //     []
-  //   );
-
-  //   const handleSkip = useCallback(
-  //     () => {
-  //       auth.skip();
-  //       router.push('/');
-  //     },
-  //     [auth, router]
-  //   );
 
   return (
     <>
@@ -111,7 +82,7 @@ const LoginPage = () => {
                 Don&apos;t have an account? &nbsp;
                 <Link
                   component={Link}
-                  href="/auth/register"
+                  href="/signup"
                   underline="hover"
                   variant="subtitle2"
                 >
@@ -119,20 +90,6 @@ const LoginPage = () => {
                 </Link>
               </Typography>
             </Stack>
-            {/* <Tabs
-              onChange={handleMethodChange}
-              sx={{ mb: 3 }}
-              value={method}
-            >
-              <Tab
-                label="Email"
-                value="email"
-              />
-              <Tab
-                label="Phone Number"
-                value="phoneNumber"
-              />
-            </Tabs> */}
             <form noValidate onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <TextField
@@ -158,12 +115,9 @@ const LoginPage = () => {
                   value={formik.values.password}
                 />
               </Stack>
-              {/* <FormHelperText sx={{ mt: 1 }}>
-                  Optionally you can skip.
-                </FormHelperText> */}
-              {formik.errors.submit && (
+              {submitError && (
                 <Typography color="error" sx={{ mt: 3 }} variant="body2">
-                  {formik.errors.submit}
+                  {submitError}
                 </Typography>
               )}
               <Button
@@ -175,23 +129,6 @@ const LoginPage = () => {
               >
                 Continue
               </Button>
-              {/* <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  // onClick={handleSkip}
-                >
-                  Skip authentication
-                </Button> */}
-              {/* <Alert
-                  color="primary"
-                  severity="info"
-                  sx={{ mt: 3 }}
-                >
-                  <div>
-                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
-                  </div>
-                </Alert> */}
             </form>
           </div>
         </Box>

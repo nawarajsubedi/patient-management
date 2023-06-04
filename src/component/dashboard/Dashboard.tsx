@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Layout } from "./dashboard/layout";
+import Layout from "../../layout";
 // import { AuthContext } from '../context/AuthContext';
 
 const Dashboard = () => {
