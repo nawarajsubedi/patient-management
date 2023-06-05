@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth, useUser } from "../hooks/useAuth";
 
 export const AccountPopover = (props: {
   anchorEl: any;
@@ -17,6 +17,7 @@ export const AccountPopover = (props: {
 }) => {
   const { anchorEl, onClose, open } = props;
   const auth = useAuth();
+  const user = useUser();
   const navigate = useNavigate();
 
   const handleSignOut = useCallback(() => {
@@ -44,7 +45,7 @@ export const AccountPopover = (props: {
       >
         <Typography variant="overline">Account</Typography>
         <Typography color="text.secondary" variant="body2">
-          Anika Visser
+          {user?.name}
         </Typography>
       </Box>
       <Divider />

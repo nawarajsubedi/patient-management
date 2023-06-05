@@ -3,6 +3,7 @@ import LoginPage from "../component/auth/Login";
 import SignupPage from "../component/auth/Signup";
 import PrivateRoute from "./PrivateRoutes";
 import Dashboard from "../component/dashboard/Dashboard";
+import PatientList from "../component/patient/PatientList";
 
 const MainRoutes = () => {
   return (
@@ -15,6 +16,14 @@ const MainRoutes = () => {
         element={
           <PrivateRoute>
             <Dashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/patients"
+        element={
+          <PrivateRoute>
+            <PatientList />
           </PrivateRoute>
         }
       />

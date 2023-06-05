@@ -1,28 +1,17 @@
 import React, { useContext } from "react";
 import Layout from "../../layout";
-// import { AuthContext } from '../context/AuthContext';
+import { Helmet } from "react-helmet";
 
 const Dashboard = () => {
-  // const { isAuthenticated, logout } = useContext(AuthContext);
-
-  // const handleLogout = () => {
-  //   logout();
-  // };
-
-  // if (!isAuthenticated) {
-  //   return (
-  //     <div>
-  //       <h2>Access Denied</h2>
-  //       <p>You need to be logged in to access the dashboard.</p>
-  //     </div>
-  //   );
-  // }
-
   return (
-    <Layout>
-      <h2>Dashboard</h2>
-      {/* <button onClick={handleLogout}>Log Out</button> */}
-    </Layout>
+    <>
+      <Helmet>
+        <title>Dashboard | Patient Management</title>
+      </Helmet>
+      <Layout>
+        <h2>Dashboard</h2>
+      </Layout>
+    </>
   );
 };
 

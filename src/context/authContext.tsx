@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { signup as registration, signin } from "../services/auth/auth-services";
+import { User } from "../component/common/interface/User";
 
 interface APIResponse {
   success: boolean;
@@ -34,7 +35,8 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const token = getAuthToken();
+  const [isAuthenticated, setIsAuthenticated] = useState(!!token);
 
   const login = async (email: string, password: string) => {
     let response: APIResponse = {
@@ -48,8 +50,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       response.error = { message: result?.message };
       return response;
     }
+    const { user }: { user: User } = result;
 
-    setAuthToken(result.token);
+    setAuthToken(result.token, user);
     setIsAuthenticated(true);
     return response;
   };
@@ -66,8 +69,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       response.error = { message: result?.message };
       return response;
     }
-
-    setAuthToken(result.token);
+    const { user }: { user: User } = result;
+    setAuthToken(result.token, user);
     setIsAuthenticated(true);
     return response;
   };
@@ -88,8 +91,9 @@ export const getAuthToken = (): string | null => {
   return localStorage.getItem("token");
 };
 
-export const setAuthToken = (token: string) => {
+export const setAuthToken = (token: string, user: User) => {
   localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const clearToken = () => {

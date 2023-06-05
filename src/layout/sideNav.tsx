@@ -1,16 +1,13 @@
-// import NextLink from 'next/link';
-// import { usePathname } from 'next/navigation';
-import PropTypes from "prop-types";
 import ArrowTopRightOnSquareIcon from "@heroicons/react/24/solid/ArrowTopRightOnSquareIcon";
 import ChevronUpDownIcon from "@heroicons/react/24/solid/ChevronUpDownIcon";
 import {
   Box,
-  Button,
   Divider,
   Drawer,
   Link,
   Stack,
   SvgIcon,
+  Theme,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -18,13 +15,17 @@ import { Logo } from "../ui-utils/logo";
 import { Scrollbar } from "../ui-utils/scrollbar";
 import { items } from "./config";
 import { SideNavItem } from "./sideNavItem";
+import { useLocation } from "react-router-dom";
 
-export const SideNav = (props: { open: any; onClose: any }) => {
-  const { open, onClose } = props;
-  const pathname = "/";
-  // const pathname = usePathname();
-  // const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const lgUp = true;
+type Props = {
+  open: boolean | undefined;
+  onClose: () => void;
+};
+
+export const SideNav = ({ open, onClose }: Props) => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const lgUp = useMediaQuery<Theme>((theme) => theme.breakpoints.up("lg"));
 
   const content = (
     <Scrollbar
@@ -71,10 +72,7 @@ export const SideNav = (props: { open: any; onClose: any }) => {
           >
             <div>
               <Typography color="inherit" variant="subtitle1">
-                Devias
-              </Typography>
-              <Typography color="neutral.400" variant="body2">
-                Production
+                Patient Management System
               </Typography>
             </div>
             <SvgIcon fontSize="small" sx={{ color: "neutral.500" }}>
@@ -101,14 +99,11 @@ export const SideNav = (props: { open: any; onClose: any }) => {
             }}
           >
             {items.map((item) => {
-              // const active = item.path ? (pathname === item.path) : false;
               const active = item.path ? pathname === item.path : false;
 
               return (
                 <SideNavItem
                   active={active}
-                  // disabled={item.disabled}
-                  // external={item.external}
                   icon={item.icon}
                   key={item.title}
                   path={item.path}
@@ -117,48 +112,6 @@ export const SideNav = (props: { open: any; onClose: any }) => {
               );
             })}
           </Stack>
-        </Box>
-        <Divider sx={{ borderColor: "neutral.700" }} />
-        <Box
-          sx={{
-            px: 2,
-            py: 3,
-          }}
-        >
-          <Typography color="neutral.100" variant="subtitle2">
-            Need more features?
-          </Typography>
-          <Typography color="neutral.500" variant="body2">
-            Check out our Pro solution template.
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              mt: 2,
-              mx: "auto",
-              width: "160px",
-              "& img": {
-                width: "100%",
-              },
-            }}
-          >
-            <img alt="Go to pro" src="/assets/devias-kit-pro.png" />
-          </Box>
-          <Button
-            component="a"
-            endIcon={
-              <SvgIcon fontSize="small">
-                <ArrowTopRightOnSquareIcon />
-              </SvgIcon>
-            }
-            fullWidth
-            href="https://material-kit-pro-react.devias.io/"
-            sx={{ mt: 2 }}
-            target="_blank"
-            variant="contained"
-          >
-            Pro Live Preview
-          </Button>
         </Box>
       </Box>
     </Scrollbar>
@@ -201,9 +154,4 @@ export const SideNav = (props: { open: any; onClose: any }) => {
       {content}
     </Drawer>
   );
-};
-
-SideNav.propTypes = {
-  onClose: PropTypes.func,
-  open: PropTypes.bool,
 };
