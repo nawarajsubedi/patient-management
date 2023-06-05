@@ -13,6 +13,7 @@ import Helmet from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useAuthentication } from "../../store/hook";
 
 interface FormValues {
   email: string;
@@ -22,6 +23,8 @@ interface FormValues {
 const LoginPage = () => {
   const navigate = useNavigate();
   const auth = useAuth();
+
+  const isAuthenticated = useAuthentication();
 
   const initialValues: FormValues = {
     email: "test@gmail.com",
