@@ -12,8 +12,10 @@ import {
 import Helmet from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { signin } from "../../services/auth/auth-services";
 import { useAuthentication } from "../../store/hook";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store/auth";
 
 interface FormValues {
   email: string;
@@ -22,7 +24,8 @@ interface FormValues {
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const auth = useAuth();
+  // const auth = useAuth();
+  const dispatch = useDispatch();
 
   const isAuthenticated = useAuthentication();
 
@@ -44,8 +47,11 @@ const LoginPage = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await auth.login(values.email, values.password);
+        const response = await signin(values.email, values.password);
         if (response.success) {
+          dispatch(
+            authAction.login({ user: response.user, token: response.token })
+          );
           navigate("/dashboard", { replace: true });
         } else {
           setSubmitError(response.error?.message);

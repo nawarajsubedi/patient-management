@@ -4,7 +4,6 @@ import {
   Box,
   Divider,
   Drawer,
-  Link,
   Stack,
   SvgIcon,
   Theme,
@@ -15,7 +14,7 @@ import { Logo } from "../ui-utils/logo";
 import { Scrollbar } from "../ui-utils/scrollbar";
 import { items } from "./config";
 import { SideNavItem } from "./sideNavItem";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type Props = {
   open: boolean | undefined;
@@ -49,7 +48,7 @@ export const SideNav = ({ open, onClose }: Props) => {
         <Box sx={{ p: 3 }}>
           <Box
             component={Link}
-            href="/"
+            to="/"
             sx={{
               display: "inline-flex",
               height: 32,

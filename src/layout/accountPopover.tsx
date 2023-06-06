@@ -8,7 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAuth, useUser } from "../hooks/useAuth";
+import { useAuthentication, useUser } from "../store/hook";
+import { logout } from "../services/auth/auth-services";
 
 export const AccountPopover = (props: {
   anchorEl: any;
@@ -16,13 +17,12 @@ export const AccountPopover = (props: {
   open: any;
 }) => {
   const { anchorEl, onClose, open } = props;
-  const auth = useAuth();
   const user = useUser();
   const navigate = useNavigate();
 
   const handleSignOut = useCallback(() => {
     onClose?.();
-    auth.logout();
+    logout();
     navigate("/login", { replace: true });
   }, [onClose]);
 

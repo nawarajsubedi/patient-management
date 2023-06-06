@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { format } from "date-fns";
 import {
   Avatar,
@@ -15,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Scrollbar } from "../../../ui-utils/scrollbar";
+import { Patient } from "../interface/Patient";
 
 const getInitials = (name = "") =>
   name
@@ -26,16 +26,16 @@ const getInitials = (name = "") =>
 
 type Props = {
   count?: number;
-  items: any[]; // Replace 'any' with the specific type of your items array
+  items: Patient[];
   onDeselectAll?: () => void;
-  onDeselectOne?: (index: number) => void; // Replace 'number' with the appropriate type of index
-  onPageChange?: (page: number) => void; // Replace 'number' with the appropriate type of page
-  onRowsPerPageChange?: (rowsPerPage: number) => void; // Replace 'number' with the appropriate type of rowsPerPage
+  onDeselectOne?: (index: string) => void;
+  onPageChange?: (page: number) => void;
+  onRowsPerPageChange?: (rowsPerPage: number) => void;
   onSelectAll?: () => void;
-  onSelectOne?: (index: number) => void; // Replace 'number' with the appropriate type of index
+  onSelectOne?: (index: string) => void;
   page?: number;
   rowsPerPage?: number;
-  selected?: any[]; // Replace 'any' with the specific type of your selected items array
+  selected?: any[];
 };
 export const PatientTable = ({
   count,
@@ -50,6 +50,7 @@ export const PatientTable = ({
   rowsPerPage,
   selected,
 }: Props) => {
+  console.log("items", items);
   const selectedSome =
     selected && selected.length > 0 && selected.length < (items?.length ?? 0);
   const selectedAll =
@@ -64,61 +65,37 @@ export const PatientTable = ({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
                 <TableCell>Name</TableCell>
+                <TableCell>SSN</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Location</TableCell>
+                <TableCell>Address</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Signed Up</TableCell>
+                <TableCell>Created at</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((patient) => {
-                const isSelected = selected && selected.includes(patient.id);
-                const createdAt = format(patient.createdAt, "dd/MM/yyyy");
-
+                const isSelected = selected && selected.includes(patient.ssn);
+                const createdAt = format(new Date(), "dd/MM/yyyy");
+                const patientName = `${patient.firstName} ${patient.lastName}`;
                 return (
-                  <TableRow hover key={patient.id} selected={isSelected}>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(patient.id);
-                          } else {
-                            onDeselectOne?.(patient.id);
-                          }
-                        }}
-                      />
-                    </TableCell>
+                  <TableRow hover key={patient.ssn} selected={isSelected}>
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
-                        <Avatar src={patient.avatar}>
-                          {getInitials(patient.name)}
+                        <Avatar src={patient.lastName}>
+                          {getInitials(patientName)}
                         </Avatar>
                         <Typography variant="subtitle2">
-                          {patient.name}
+                          {patientName}
                         </Typography>
                       </Stack>
                     </TableCell>
+                    <TableCell>{patient.ssn}</TableCell>
                     <TableCell>{patient.email}</TableCell>
                     <TableCell>
-                      {patient.address.city}, {patient.address.state},{" "}
-                      {patient.address.country}
+                      {patient.address1}, {patient.country}
                     </TableCell>
-                    <TableCell>{patient.phone}</TableCell>
+                    <TableCell>{patient.number1}</TableCell>
                     <TableCell>{createdAt}</TableCell>
                   </TableRow>
                 );
@@ -127,15 +104,6 @@ export const PatientTable = ({
           </Table>
         </Box>
       </Scrollbar>
-      {/* <TablePagination
-        component="div"
-        count={count}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
-      /> */}
     </Card>
   );
 };

@@ -7,3 +7,10 @@ export const useAuthentication = () => {
   );
   return isAuthenticated;
 };
+
+export const useUser = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.authentication.user
+  );
+  return isAuthenticated;
+};

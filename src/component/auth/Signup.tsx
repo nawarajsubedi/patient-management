@@ -12,7 +12,10 @@ import {
 import Helmet from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { signup } from "../../services/auth/auth-services";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store/auth";
+// import { useAuth } from "../../hooks/useAuth";
 
 interface FormValues {
   email: string;
@@ -22,7 +25,7 @@ interface FormValues {
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  const auth = useAuth();
+  const dispatch = useDispatch();
 
   const initialValues: FormValues = {
     email: "",
@@ -44,12 +47,15 @@ const SignupPage = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await auth.signup(
+        const response = await signup(
           values.email,
           values.password,
           values.name
         );
         if (response.success) {
+          dispatch(
+            authAction.login({ user: response.user, token: response.token })
+          );
           navigate("/dashboard", { replace: true });
         } else {
           setSubmitError(response.error?.message);

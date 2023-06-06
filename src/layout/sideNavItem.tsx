@@ -1,17 +1,23 @@
-// import NextLink from 'next/link';
-import PropTypes from "prop-types";
-import { Box, ButtonBase, Link } from "@mui/material";
+import { Box, ButtonBase } from "@mui/material";
+import { Link } from "react-router-dom";
 
-export const SideNavItem = (props: {
-  active?: boolean;
-  disabled: any;
-  external: any;
-  icon: any;
-  path: any;
-  title: any;
-}) => {
-  const { active = true, disabled, external, icon, path, title } = props;
+type Props = {
+  active: boolean;
+  disabled?: boolean;
+  external?: boolean;
+  icon?: React.ReactNode;
+  path: string;
+  title: string;
+};
 
+export const SideNavItem = ({
+  active = true,
+  disabled,
+  external,
+  icon,
+  path,
+  title,
+}: Props) => {
   const linkProps = path
     ? external
       ? {
@@ -21,7 +27,7 @@ export const SideNavItem = (props: {
         }
       : {
           component: Link,
-          href: path,
+          to: path,
         }
     : {};
 
@@ -87,13 +93,4 @@ export const SideNavItem = (props: {
       </ButtonBase>
     </li>
   );
-};
-
-SideNavItem.propTypes = {
-  active: PropTypes.bool,
-  disabled: PropTypes.bool,
-  external: PropTypes.bool,
-  icon: PropTypes.node,
-  path: PropTypes.string,
-  title: PropTypes.string.isRequired,
 };

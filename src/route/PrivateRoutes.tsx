@@ -1,11 +1,12 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuthentication } from "../store/hook";
+// import { useAuth } from "../hooks/useAuth";
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
-  const auth = useAuth();
+  const isAuthenticated = useAuthentication();
   const location = useLocation();
 
-  if (!auth?.isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
