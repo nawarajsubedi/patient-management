@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
 import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
@@ -14,25 +14,22 @@ import {
 } from "@mui/material";
 
 import { PatientTable } from "../common/table/patientTable";
-import { getPatientList } from "../../services/patient/patient-services";
-import { Patient } from "../common/interface/Patient";
+import { getPatientList } from "../../store/thunks/patient";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { usePatientData } from "../../store/hook";
+import { useDispatch } from "react-redux";
 
 const PatientListPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [patientData, setPatientData] = useState<Patient[]>([]);
-
-  const fetchData = async () => {
-    const data = await getPatientList();
-    setPatientData(data);
-  };
+  const dispatch: ThunkDispatch<any, void, AnyAction> = useDispatch();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    dispatch(getPatientList(page));
+  }, [dispatch, page]);
 
-  const patients = useMemo(() => patientData, [patientData]);
+  const { data, error, status } = usePatientData();
 
   return (
     <>
@@ -77,8 +74,8 @@ const PatientListPage = () => {
                 </Stack>
               </Stack>
               <PatientTable
-                count={patients.length}
-                items={patients}
+                count={data.length}
+                items={data}
                 page={page}
                 rowsPerPage={rowsPerPage}
               />

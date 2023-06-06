@@ -1,10 +1,10 @@
+import { SERVER_URL } from "../../common/util";
 import { AuthResponse } from "../../component/common/interface/AuthResponse";
 import { User } from "../../component/common/interface/User";
 import { setAuthToken } from "../../store/utils";
-const BASE_URL = "http://localhost:8080";
 
 export const signup = async (email: string, password: string, name: string) => {
-  const result = await fetch(`${BASE_URL}/signup`, {
+  const result = await fetch(`${SERVER_URL}/signup`, {
     method: "POST",
     headers: {
       "content-type": "application/json;charset=UTF-8",
@@ -40,7 +40,7 @@ export const signin = async (
   email: string,
   password: string
 ): Promise<AuthResponse> => {
-  const result = await fetch(`${BASE_URL}/login`, {
+  const result = await fetch(`${SERVER_URL}/login`, {
     method: "POST",
     headers: {
       "content-type": "application/json;charset=UTF-8",
