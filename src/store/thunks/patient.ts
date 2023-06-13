@@ -1,11 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SERVER_URL } from "../../common/util";
+import { GET_PATIENT_DATA_API } from "../../common/url";
+import { Patient } from "../../component/common/interface/Patient";
 
-export const getPatientList = createAsyncThunk(
+type FetchPatientsResponse = {
+  patients: Patient[];
+};
+
+type FetchPatientsError = {
+  message: string;
+};
+
+export const getPatientList = createAsyncThunk<
+  Patient[],
+  { page: number; rowsPerPage: number },
+  {
+    rejectValue: FetchPatientsError;
+  }
+>(
   "patient/getPatientList",
-  async (page: number, { rejectWithValue }) => {
+  async ({ page, rowsPerPage }, { rejectWithValue }) => {
     try {
-      const result = await fetch(`${SERVER_URL}/patients`, {
+      const result = await fetch(GET_PATIENT_DATA_API, {
         method: "GET",
         headers: {
           "content-type": "application/json;charset=UTF-8",
@@ -16,9 +31,9 @@ export const getPatientList = createAsyncThunk(
       return data.patients;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue({ message: error.message });
       }
-      return rejectWithValue("An error occurred");
+      return rejectWithValue({ message: "An error occurred" });
     }
   }
 );
