@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
-import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
-import Layout from "../../layout";
-
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -12,25 +10,47 @@ import {
   SvgIcon,
   Typography,
 } from "@mui/material";
+import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
+import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
+import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
+import Layout from "../../layout";
 
 import { PatientTable } from "../common/table/patientTable";
 import { getPatientList } from "../../store/thunks/patient";
-import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+
 import { usePatientData } from "../../store/hook";
-import { useDispatch } from "react-redux";
+import CSVUpload from "./CSVUpload";
 
 const PatientListPage = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const dispatch: ThunkDispatch<any, void, AnyAction> = useDispatch();
 
+  const onPageChange = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ) => {
+    setPage(page);
+  };
+
+  const handleRowsPerPageChange: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (event) => {
+    const { value } = event.target;
+    const rowsPerPageValue = parseInt(value, 10);
+    setRowsPerPage(rowsPerPageValue);
+  };
+
   useEffect(() => {
-    dispatch(getPatientList(page));
+    dispatch(getPatientList({ page, rowsPerPage }));
   }, [dispatch, page]);
 
   const { data, error, status } = usePatientData();
 
+  console.log("page", page);
+  console.log("rowsPerPage", rowsPerPage);
+  console.log("count", data.length);
   return (
     <>
       <Helmet>
@@ -72,12 +92,27 @@ const PatientListPage = () => {
                     </Button>
                   </Stack>
                 </Stack>
+                <CSVUpload />
+                {/* <div>
+                  <Button
+                    startIcon={
+                      <SvgIcon fontSize="small">
+                        <PlusIcon />
+                      </SvgIcon>
+                    }
+                    variant="contained"
+                  >
+                    Add
+                  </Button>
+                </div> */}
               </Stack>
               <PatientTable
                 count={data.length}
                 items={data}
                 page={page}
                 rowsPerPage={rowsPerPage}
+                onPageChange={onPageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
               />
             </Stack>
           </Container>

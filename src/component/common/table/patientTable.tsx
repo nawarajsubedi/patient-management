@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { Scrollbar } from "../../../ui-utils/scrollbar";
 import { Patient } from "../interface/Patient";
+import React from "react";
 
 const getInitials = (name = "") =>
   name
@@ -25,38 +26,43 @@ const getInitials = (name = "") =>
     .join("");
 
 type Props = {
-  count?: number;
+  count: number;
   items: Patient[];
-  onDeselectAll?: () => void;
-  onDeselectOne?: (index: string) => void;
-  onPageChange?: (page: number) => void;
-  onRowsPerPageChange?: (rowsPerPage: number) => void;
-  onSelectAll?: () => void;
-  onSelectOne?: (index: string) => void;
-  page?: number;
-  rowsPerPage?: number;
-  selected?: any[];
+  // onDeselectAll?: () => void;
+  // onDeselectOne: (index: string) => void;
+  onPageChange: (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ) => void;
+  // onRowsPerPageChange?: (rowsPerPage: number) => void;
+  onRowsPerPageChange?: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  >;
+  // onSelectAll?: () => void;
+  // onSelectOne?: (index: string) => void;
+  page: number;
+  rowsPerPage: number;
+  // selected: any[];
 };
 export const PatientTable = ({
   count,
   items,
-  onDeselectAll,
-  onDeselectOne,
+  // onDeselectAll,
+  // onDeselectOne,
   onPageChange,
   onRowsPerPageChange,
-  onSelectAll,
-  onSelectOne,
+  // onSelectAll,
+  // onSelectOne,
   page,
   rowsPerPage,
-  selected,
-}: Props) => {
-  console.log("items", items);
-  const selectedSome =
-    selected && selected.length > 0 && selected.length < (items?.length ?? 0);
-  const selectedAll =
-    selected &&
-    (items?.length ?? 0) > 0 &&
-    selected.length === (items?.length ?? 0);
+}: // selected,
+Props) => {
+  // const selectedSome =
+  //   selected && selected.length > 0 && selected.length < (items?.length ?? 0);
+  // const selectedAll =
+  //   selected &&
+  //   (items?.length ?? 0) > 0 &&
+  //   selected.length === (items?.length ?? 0);
 
   return (
     <Card>
@@ -75,11 +81,11 @@ export const PatientTable = ({
             </TableHead>
             <TableBody>
               {items.map((patient) => {
-                const isSelected = selected && selected.includes(patient.ssn);
+                // const isSelected = selected && selected.includes(patient.ssn);
                 const createdAt = format(new Date(), "dd/MM/yyyy");
                 const patientName = `${patient.firstName} ${patient.lastName}`;
                 return (
-                  <TableRow hover key={patient.ssn} selected={isSelected}>
+                  <TableRow hover key={patient.ssn}>
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar src={patient.lastName}>
@@ -103,6 +109,16 @@ export const PatientTable = ({
             </TableBody>
           </Table>
         </Box>
+        <TablePagination
+          component="div"
+          count={count}
+          onPageChange={onPageChange}
+          onRowsPerPageChange={onRowsPerPageChange}
+          // page={page}
+          page={!count || count <= 0 ? 0 : page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
       </Scrollbar>
     </Card>
   );
