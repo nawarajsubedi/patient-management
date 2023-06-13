@@ -1,4 +1,4 @@
-import Layout from "../../layout";
+import Layout from "../../component/layout";
 import { Helmet } from "react-helmet";
 import { Box, Container, Stack, Typography } from "@mui/material";
 

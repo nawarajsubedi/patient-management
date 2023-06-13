@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Patient } from "../component/common/interface/Patient";
-import { getPatientList } from "./thunks/patient";
+import { Patient } from "../../component/common/interface/Patient";
+import { getPatientList } from "../thunks/patient";
 
 interface IPatient {
   data: Patient[];

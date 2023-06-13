@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuthentication } from "../store/hook";
-// import { useAuth } from "../hooks/useAuth";
+import { useAuthentication } from "../store/hooks/auth";
 
 const PrivateRoute = (props: { children: JSX.Element }) => {
   const isAuthenticated = useAuthentication();

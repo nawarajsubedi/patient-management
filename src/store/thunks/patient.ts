@@ -2,10 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GET_PATIENT_DATA_API } from "../../common/url";
 import { Patient } from "../../component/common/interface/Patient";
 
-type FetchPatientsResponse = {
-  patients: Patient[];
-};
-
 type FetchPatientsError = {
   message: string;
 };
@@ -27,8 +23,8 @@ export const getPatientList = createAsyncThunk<
         },
       });
 
-      const data = await result.json();
-      return data.patients;
+      const { patients } = await result.json();
+      return patients;
     } catch (error: unknown) {
       if (error instanceof Error) {
         return rejectWithValue({ message: error.message });

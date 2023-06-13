@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "../component/auth/Login";
-import SignupPage from "../component/auth/Signup";
 import PrivateRoute from "./PrivateRoutes";
-import Dashboard from "../component/dashboard/Dashboard";
-import PatientList from "../component/patient/PatientList";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import LoginPage from "../pages/Login";
+import SignupPage from "../pages/Signup";
+import PatientList from "../pages/Patients/PatientList";
 
 const MainRoutes = () => {
   return (

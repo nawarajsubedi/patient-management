@@ -10,10 +10,10 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { Logo } from "../ui-utils/logo";
-import { Scrollbar } from "../ui-utils/scrollbar";
-import { items } from "./config";
-import { SideNavItem } from "./sideNavItem";
+import { Logo } from "../../ui-utils/logo";
+import { Scrollbar } from "../../ui-utils/scrollbar";
+import { items } from "./Config";
+import { SideNavItem } from "./SideNavItem";
 import { Link, useLocation } from "react-router-dom";
 
 type Props = {

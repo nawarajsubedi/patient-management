@@ -1,20 +1,6 @@
 import { useSelector } from "react-redux";
-import { RootState } from ".";
+import { RootState } from "..";
 import { useMemo } from "react";
-
-export const useAuthentication = () => {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.authentication.isAuthenticated
-  );
-  return isAuthenticated;
-};
-
-export const useUser = () => {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.authentication.user
-  );
-  return isAuthenticated;
-};
 
 export const usePatientData = () => {
   const { error, status, data } = useSelector((state: RootState) => {

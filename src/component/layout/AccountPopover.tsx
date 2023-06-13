@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAuthentication, useUser } from "../store/hook";
-import { logout } from "../services/auth/auth-services";
+import { logout } from "../../services/auth/auth-services";
+import { useUser } from "../../store/hooks/auth";
 
 export const AccountPopover = (props: {
   anchorEl: any;

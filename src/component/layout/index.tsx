@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { SideNav } from "./sideNav";
-import { TopNav } from "./topNav";
+import { SideNav } from "./SideNav";
+import { TopNav } from "./TopNav";
 
 const SIDE_NAV_WIDTH = 280;
 

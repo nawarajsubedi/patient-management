@@ -13,13 +13,12 @@ import {
 import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
 import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import Layout from "../../layout";
 
-import { PatientTable } from "../common/table/patientTable";
-import { getPatientList } from "../../store/thunks/patient";
-
-import { usePatientData } from "../../store/hook";
 import CSVUpload from "./CSVUpload";
+import Layout from "../../component/layout";
+import { getPatientList } from "../../store/thunks/patient";
+import { PatientTable } from "../../component/common/table/patientTable";
+import { usePatientData } from "../../store/hooks/patients";
 
 const PatientListPage = () => {
   const [page, setPage] = useState(1);
