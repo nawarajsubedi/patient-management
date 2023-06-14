@@ -14,8 +14,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Scrollbar } from "../../../ui-utils/scrollbar";
-import { Patient } from "../interface/Patient";
 import React from "react";
+import { Patient } from "../../../store/thunks/patient";
 
 const getInitials = (name = "") =>
   name

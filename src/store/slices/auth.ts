@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "../../component/common/interface/User";
 import { getAuth } from "../utils";
+import { User } from "../../services/auth/auth-services";
 
 interface IAuthentication {
   isAuthenticated: boolean;
