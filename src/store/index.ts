@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { patientReducer } from "./slices/patient";
 import { authReducer } from "./slices/auth";
+import { patientDetailsReducer } from "./slices/patientDetails";
 
 const store = configureStore({
   reducer: {
     authentication: authReducer,
     patients: patientReducer,
+    patientDetails: patientDetailsReducer,
   },
 });
 

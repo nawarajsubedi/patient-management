@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import LoginPage from "../pages/Login";
 import SignupPage from "../pages/Signup";
 import PatientList from "../pages/Patients/PatientList";
+import PatientDetailsPage from "../pages/Patients/PatientDetail";
 
 const MainRoutes = () => {
   return (
@@ -24,6 +25,14 @@ const MainRoutes = () => {
         element={
           <PrivateRoute>
             <PatientList />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/patient-details/:patientId"
+        element={
+          <PrivateRoute>
+            <PatientDetailsPage />
           </PrivateRoute>
         }
       />

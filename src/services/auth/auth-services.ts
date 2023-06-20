@@ -55,13 +55,14 @@ export const signin = async (
     }),
   });
 
-  const data = await result.json();
+  const { data } = await result.json();
   const {
-    user,
-    token,
+    accessToken: token,
     message,
-  }: { user: User; token: string; message: string } = data;
-  return parseResponse({ user, token, message });
+    id,
+    name,
+  }: { accessToken: string; message: string; id: string; name: string } = data;
+  return parseResponse({ user: { name, id, email }, token, message });
 };
 
 const parseResponse = ({

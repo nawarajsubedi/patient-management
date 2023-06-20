@@ -18,7 +18,7 @@ const LoginForm = () => {
 
   const initialValues: FormValues = {
     email: "test@gmail.com",
-    password: "Test@123",
+    password: "testpassword",
   };
 
   const [submitError, setSubmitError] = useState<string | undefined>("");

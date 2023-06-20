@@ -16,6 +16,7 @@ import {
 import { Scrollbar } from "../../../ui-utils/scrollbar";
 import React from "react";
 import { Patient } from "../../../store/thunks/patient";
+import { getFullname } from "../../../common/utils";
 
 const getInitials = (name = "") =>
   name
@@ -83,12 +84,12 @@ Props) => {
               {items.map((patient) => {
                 // const isSelected = selected && selected.includes(patient.ssn);
                 const createdAt = format(new Date(), "dd/MM/yyyy");
-                const patientName = `${patient.firstName} ${patient.lastName}`;
+                const patientName = getFullname(patient);
                 return (
-                  <TableRow hover key={patient.ssn}>
+                  <TableRow hover key={patient.patient_ssn}>
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
-                        <Avatar src={patient.lastName}>
+                        <Avatar src={patient.patient_lastname}>
                           {getInitials(patientName)}
                         </Avatar>
                         <Typography variant="subtitle2">
@@ -96,12 +97,12 @@ Props) => {
                         </Typography>
                       </Stack>
                     </TableCell>
-                    <TableCell>{patient.ssn}</TableCell>
-                    <TableCell>{patient.email}</TableCell>
+                    <TableCell>{patient.patient_ssn}</TableCell>
+                    <TableCell>{patient.patient_email}</TableCell>
                     <TableCell>
-                      {patient.address1}, {patient.country}
+                      {patient.patient_address1}, {patient.patient_country}
                     </TableCell>
-                    <TableCell>{patient.number1}</TableCell>
+                    <TableCell>{patient.patient_number1}</TableCell>
                     <TableCell>{createdAt}</TableCell>
                   </TableRow>
                 );
