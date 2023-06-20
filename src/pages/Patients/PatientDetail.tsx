@@ -24,6 +24,7 @@ import { usePatientData, usePatientDetails } from "../../store/hooks/patients";
 import { PatientProfile } from "./components/PatientProfile";
 import { PatientProfileDetails } from "./components/PatientProfileDetails";
 import { getFullname } from "../../common/utils";
+import { MedicationLevelChart } from "./components/MedicationLevelChart";
 
 const PatientDetailsPage = () => {
   const { patientId } = useParams();
@@ -63,6 +64,10 @@ const PatientDetailsPage = () => {
                   </Grid>
                   <Grid xs={12} md={6} lg={8}>
                     <PatientProfileDetails patientDetails={data} />
+                  </Grid>
+
+                  <Grid xs={12} md={6} lg={8}>
+                    <MedicationLevelChart patientDetails={data} />
                   </Grid>
                 </Grid>
               </div>
