@@ -29,7 +29,7 @@ const MainRoutes = () => {
         }
       />
       <Route
-        path="/patient-details/:patientId"
+        path="/patients/:patientId"
         element={
           <PrivateRoute>
             <PatientDetailsPage />

@@ -25,28 +25,28 @@ type Props = {
 };
 export const MedicationLevelChart = ({ patientDetails }: Props) => {
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["1", "2", "3", "4", "5", "6", "7"],
     datasets: [
       {
-        label: "My First dataset",
+        label: "Medication level",
         backgroundColor: "rgba(255,99,132,0.2)",
         borderColor: "rgba(255,99,132,1)",
         borderWidth: 1,
         //stack: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: [50, 59, 80, 81, 56, 55, 40],
+        data: [6.6, 6, 5, 4, 2, 3, 1],
       },
 
       {
-        label: "My second dataset",
+        label: "Medication level change",
         backgroundColor: "rgba(155,231,91,0.2)",
         borderColor: "rgba(255,99,132,1)",
         borderWidth: 1,
         //stack: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: [10, 79, 50, 41, 16, 85, 20],
+        data: [0, 0, 0, 3, 2, 1, 0],
       },
     ],
   };
@@ -65,5 +65,14 @@ export const MedicationLevelChart = ({ patientDetails }: Props) => {
       },
     },
   } as ChartOptions<"bar">;
-  return <Chart type="bar" data={data} options={options} />;
+  return (
+    <Card>
+      <CardHeader title="Medication-Intake-Level in last 1 year" />
+      <CardContent>
+        <Box>
+          <Chart type="bar" data={data} options={options} />
+        </Box>
+      </CardContent>
+    </Card>
+  );
 };

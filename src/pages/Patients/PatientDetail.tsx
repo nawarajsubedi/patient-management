@@ -1,26 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  SvgIcon,
-  Typography,
-} from "@mui/material";
-import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
-import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
-import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 
-import CSVUpload from "./CSVUpload";
 import Layout from "../../component/layout";
 import { getPatientDetails } from "../../store/thunks/patient";
-import { PatientTable } from "../../component/common/table/patientTable";
-import { usePatientData, usePatientDetails } from "../../store/hooks/patients";
+import { usePatientDetails } from "../../store/hooks/patients";
 import { PatientProfile } from "./components/PatientProfile";
 import { PatientProfileDetails } from "./components/PatientProfileDetails";
 import { getFullname } from "../../common/utils";
@@ -62,11 +49,12 @@ const PatientDetailsPage = () => {
                   <Grid xs={12} md={6} lg={4}>
                     <PatientProfile patientDetails={data} />
                   </Grid>
+
                   <Grid xs={12} md={6} lg={8}>
                     <PatientProfileDetails patientDetails={data} />
                   </Grid>
 
-                  <Grid xs={12} md={6} lg={8}>
+                  <Grid xs={12} md={6} lg={8} sx={{ mt: "16px" }}>
                     <MedicationLevelChart patientDetails={data} />
                   </Grid>
                 </Grid>
