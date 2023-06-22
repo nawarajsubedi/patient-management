@@ -5,6 +5,7 @@ import {
   Card,
   Checkbox,
   Stack,
+  SvgIcon,
   Table,
   TableBody,
   TableCell,
@@ -13,10 +14,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import ViewIcon from "@heroicons/react/24/solid/EyeIcon";
+
 import { Scrollbar } from "../../../ui-utils/scrollbar";
 import React from "react";
 import { Patient } from "../../../store/thunks/patient";
 import { getFullname } from "../../../common/utils";
+import { Link } from "react-router-dom";
 
 const getInitials = (name = "") =>
   name
@@ -77,13 +81,17 @@ Props) => {
                 <TableCell>Email</TableCell>
                 <TableCell>Address</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Created at</TableCell>
+                <TableCell>Last Observation</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((patient) => {
                 // const isSelected = selected && selected.includes(patient.ssn);
-                const createdAt = format(new Date(), "dd/MM/yyyy");
+                const lastObservation = format(
+                  new Date(patient.observation[0].observation_date),
+                  "dd/MM/yyyy"
+                );
                 const patientName = getFullname(patient);
                 return (
                   <TableRow hover key={patient.patient_ssn}>
@@ -103,7 +111,14 @@ Props) => {
                       {patient.patient_address1}, {patient.patient_country}
                     </TableCell>
                     <TableCell>{patient.patient_number1}</TableCell>
-                    <TableCell>{createdAt}</TableCell>
+                    <TableCell>{lastObservation}</TableCell>
+                    <TableCell>
+                      <Link to={`/patients/${patient.patient_ssn}`}>
+                        <SvgIcon fontSize="small">
+                          <ViewIcon />
+                        </SvgIcon>
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 );
               })}

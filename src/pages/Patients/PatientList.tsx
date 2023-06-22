@@ -13,6 +13,7 @@ import {
 import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
 import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
+import ViewIcon from "@heroicons/react/24/solid/EyeIcon";
 
 import CSVUpload from "./CSVUpload";
 import Layout from "../../component/layout";
