@@ -10,11 +10,13 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
+
 type Props = {
   value: number;
   title: string;
   sx?: SxProps<Theme> | undefined;
 };
+
 export const TotalPractitioners = ({ sx, value, title }: Props) => {
   return (
     <Card sx={sx}>

@@ -2,18 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  SvgIcon,
-  Typography,
-} from "@mui/material";
-import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
-import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
-import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import ViewIcon from "@heroicons/react/24/solid/EyeIcon";
+import { Box, Container, Stack, Typography } from "@mui/material";
 
 import CSVUpload from "./CSVUpload";
 import Layout from "../../component/layout";
@@ -47,10 +36,6 @@ const PatientListPage = () => {
   }, [dispatch, page]);
 
   const { data, error, status } = usePatientData();
-
-  console.log("page", page);
-  console.log("rowsPerPage", rowsPerPage);
-  console.log("count", data.length);
   return (
     <>
       <Helmet>
@@ -69,42 +54,8 @@ const PatientListPage = () => {
               <Stack direction="row" justifyContent="space-between" spacing={4}>
                 <Stack spacing={1}>
                   <Typography variant="h4">Patients</Typography>
-                  <Stack alignItems="center" direction="row" spacing={1}>
-                    <Button
-                      color="inherit"
-                      startIcon={
-                        <SvgIcon fontSize="small">
-                          <ArrowUpOnSquareIcon />
-                        </SvgIcon>
-                      }
-                    >
-                      Import
-                    </Button>
-                    <Button
-                      color="inherit"
-                      startIcon={
-                        <SvgIcon fontSize="small">
-                          <ArrowDownOnSquareIcon />
-                        </SvgIcon>
-                      }
-                    >
-                      Export
-                    </Button>
-                  </Stack>
                 </Stack>
                 <CSVUpload />
-                {/* <div>
-                  <Button
-                    startIcon={
-                      <SvgIcon fontSize="small">
-                        <PlusIcon />
-                      </SvgIcon>
-                    }
-                    variant="contained"
-                  >
-                    Add
-                  </Button>
-                </div> */}
               </Stack>
               <PatientTable
                 count={data.length}
