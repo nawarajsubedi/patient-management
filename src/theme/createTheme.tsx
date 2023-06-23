@@ -11,7 +11,7 @@ import { createShadows } from "./createShadows";
 import { createTypography } from "./createTypography";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
-export function createTheme() {
+const createTheme = () => {
   const palette = createPalette() as PaletteOptions;
   // const components = createComponents({ palette });
   const components = createComponents({ palette }) as Components; // Specify the type of `components`
@@ -37,4 +37,6 @@ export function createTheme() {
     },
     typography,
   });
-}
+};
+
+export default createTheme;
