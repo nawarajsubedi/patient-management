@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 
 import Layout from "../../component/layout";
 import { getDashboardReport } from "../../store/thunks/patient";
@@ -25,7 +25,7 @@ const DashboardPage = () => {
 
   const { data, error, status } = useDashboardData();
 
-  console.log("data", data);
+  // console.log("data---------------", data);
   return (
     <>
       <Helmet>
@@ -41,28 +41,28 @@ const DashboardPage = () => {
         >
           <Container maxWidth="xl">
             <Grid container spacing={3}>
-              <Grid xs={12} sm={6} lg={3}>
+              <Grid item xs={12} sm={6} lg={3}>
                 <TotalPatients
                   sx={{ height: "100%", marginRight: "16px" }}
                   value={data.patientCount}
                   title="Total Patients"
                 />
               </Grid>
-              <Grid xs={12} sm={6} lg={3}>
+              <Grid item xs={12} sm={6} lg={3}>
                 <TotalPractitioners
                   sx={{ height: "100%", marginRight: "16px" }}
                   value={data.practitionerCount}
                   title="Total Practitioners"
                 />
               </Grid>
-              <Grid xs={12} sm={6} lg={3}>
+              <Grid item xs={12} sm={6} lg={3}>
                 <TotalNurses
                   sx={{ height: "100%", marginRight: "16px" }}
                   value={data.nurseCount}
                   title="Total Nurses"
                 />
               </Grid>
-              <Grid xs={12} sm={6} lg={3}>
+              <Grid item xs={12} sm={6} lg={3}>
                 <TotalObservationsCard
                   sx={{ height: "100%" }}
                   value={data.observationCount}
@@ -78,13 +78,14 @@ const DashboardPage = () => {
                   width: "100%",
                 }}
               >
-                <Grid xs={12} lg={8} sx={{ width: "60%" }}>
+                <Grid item xs={12} lg={8} sx={{ width: "60%" }}>
                   <PractitionerByPatientChart
+                    data-testid="bar-chart"
                     data={data.practitionerByPatient}
                   />
                 </Grid>
 
-                <Grid xs={12} md={12} lg={8} sx={{ width: "40%" }}>
+                <Grid item xs={12} md={12} lg={8} sx={{ width: "40%" }}>
                   <PatientSummaryTable
                     data={data.patients}
                     title="Patients with Last Observation"
@@ -102,16 +103,22 @@ const DashboardPage = () => {
                   width: "100%",
                 }}
               >
-                <Grid xs={12} lg={8} sx={{ margin: "16px 16px 0 0" }}>
+                <Grid item xs={12} lg={8} sx={{ margin: "16px 16px 0 0" }}>
                   <NurseByPatientChart data={data.nurseByPatient} />
                 </Grid>
 
-                <Grid xs={12} lg={8} sx={{ margin: "16px 16px 0 0" }}>
+                <Grid item xs={12} lg={8} sx={{ margin: "16px 16px 0 0" }}>
                   <MedicationByPatientChart data={data.medicationByPatient} />
                 </Grid>
               </Box>
 
-              <Grid xs={12} md={12} lg={8} sx={{ margin: "16px 16px 0 0" }}>
+              <Grid
+                item
+                xs={12}
+                md={12}
+                lg={8}
+                sx={{ margin: "16px 16px 0 0" }}
+              >
                 <PatientSummaryTable
                   data={data.patients}
                   title="Patients with Last Medication"

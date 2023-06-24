@@ -24,7 +24,8 @@ type Props = {
 export const SideNav = ({ open, onClose }: Props) => {
   const location = useLocation();
   const pathname = location.pathname;
-  const lgUp = useMediaQuery<Theme>((theme) => theme.breakpoints.up("lg"));
+  // const lgUp = useMediaQuery<Theme>((theme) => theme.breakpoints.up("lg"));
+  const lgUp = true;
 
   const content = (
     <Scrollbar
