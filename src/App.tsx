@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "./theme";
+import createTheme from "./theme/createTheme";
 import MainRoutes from "./route/MainRoutes";
 
 const App = () => {

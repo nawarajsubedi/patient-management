@@ -1,9 +1,24 @@
 import { LOGIN_URL, SIGNUP_URL } from "../../common/url";
-import { AuthResponse } from "../../component/common/interface/AuthResponse";
-import { User } from "../../component/common/interface/User";
 import { setAuthToken } from "../../store/utils";
 
-export const signup = async (email: string, password: string, name: string) => {
+export interface User {
+  email: string;
+  id: string;
+  name: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  token?: string;
+  user?: User;
+  error?: { message?: string };
+}
+
+export const signup = async (
+  email: string,
+  password: string,
+  name: string
+): Promise<AuthResponse> => {
   const result = await fetch(SIGNUP_URL, {
     method: "POST",
     headers: {
@@ -40,13 +55,14 @@ export const signin = async (
     }),
   });
 
-  const data = await result.json();
+  const { data } = await result.json();
   const {
-    user,
-    token,
+    accessToken: token,
     message,
-  }: { user: User; token: string; message: string } = data;
-  return parseResponse({ user, token, message });
+    id,
+    name,
+  }: { accessToken: string; message: string; id: string; name: string } = data;
+  return parseResponse({ user: { name, id, email }, token, message });
 };
 
 const parseResponse = ({

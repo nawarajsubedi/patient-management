@@ -1,4 +1,4 @@
-import { User } from "../component/common/interface/User";
+import { User } from "../services/auth/auth-services";
 
 export const getAuth = () => {
   const token = localStorage.getItem("token");
