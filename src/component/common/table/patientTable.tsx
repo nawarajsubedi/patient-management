@@ -3,7 +3,6 @@ import {
   Avatar,
   Box,
   Card,
-  Checkbox,
   Stack,
   SvgIcon,
   Table,
@@ -19,7 +18,7 @@ import ViewIcon from "@heroicons/react/24/solid/EyeIcon";
 import { Scrollbar } from "../../../ui-utils/scrollbar";
 import React from "react";
 import { Patient } from "../../../store/thunks/patient";
-import { getFullname } from "../../../common/utils";
+import { formatDate, getFullname } from "../../../common/utils";
 import { Link } from "react-router-dom";
 
 const getInitials = (name = "") =>
@@ -33,42 +32,24 @@ const getInitials = (name = "") =>
 type Props = {
   count: number;
   items: Patient[];
-  // onDeselectAll?: () => void;
-  // onDeselectOne: (index: string) => void;
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement> | null,
     page: number
   ) => void;
-  // onRowsPerPageChange?: (rowsPerPage: number) => void;
   onRowsPerPageChange?: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   >;
-  // onSelectAll?: () => void;
-  // onSelectOne?: (index: string) => void;
   page: number;
   rowsPerPage: number;
-  // selected: any[];
 };
 export const PatientTable = ({
   count,
   items,
-  // onDeselectAll,
-  // onDeselectOne,
   onPageChange,
   onRowsPerPageChange,
-  // onSelectAll,
-  // onSelectOne,
   page,
   rowsPerPage,
-}: // selected,
-Props) => {
-  // const selectedSome =
-  //   selected && selected.length > 0 && selected.length < (items?.length ?? 0);
-  // const selectedAll =
-  //   selected &&
-  //   (items?.length ?? 0) > 0 &&
-  //   selected.length === (items?.length ?? 0);
-
+}: Props) => {
   return (
     <Card>
       <Scrollbar>
@@ -87,11 +68,10 @@ Props) => {
             </TableHead>
             <TableBody>
               {items.map((patient) => {
-                // const isSelected = selected && selected.includes(patient.ssn);
-                const lastObservation = format(
-                  new Date(patient.observation[0].observation_date),
-                  "dd/MM/yyyy"
+                const lastObservation = formatDate(
+                  patient.observation[0].observation_date
                 );
+
                 const patientName = getFullname(patient);
                 return (
                   <TableRow hover key={patient.patient_ssn}>
@@ -130,8 +110,8 @@ Props) => {
           count={count}
           onPageChange={onPageChange}
           onRowsPerPageChange={onRowsPerPageChange}
-          // page={page}
-          page={!count || count <= 0 ? 0 : page}
+          page={page}
+          // page={!count || count <= 0 ? 0 : page}
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
         />

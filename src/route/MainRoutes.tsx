@@ -5,6 +5,7 @@ import LoginPage from "../pages/Login";
 import SignupPage from "../pages/Signup";
 import PatientList from "../pages/Patients/PatientList";
 import PatientDetailsPage from "../pages/Patients/PatientDetail";
+import RiskReportPage from "../pages/RiskReport/RiskReport";
 
 const MainRoutes = () => {
   return (
@@ -17,6 +18,14 @@ const MainRoutes = () => {
         element={
           <PrivateRoute>
             <Dashboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/risk-report"
+        element={
+          <PrivateRoute>
+            <RiskReportPage />
           </PrivateRoute>
         }
       />

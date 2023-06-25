@@ -5,12 +5,14 @@ import { patientDetailsReducer } from "./slices/patientDetails";
 import { dashboardReportReducer } from "./slices/dashboardReport";
 
 import type { PreloadedState } from "@reduxjs/toolkit";
+import { highRiskReportReducer } from "./slices/highRiskReport";
 
 const rootReducer = combineReducers({
   authentication: authReducer,
   patients: patientReducer,
   patientDetails: patientDetailsReducer,
   dashboardReport: dashboardReportReducer,
+  highRiskReport: highRiskReportReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
@@ -20,21 +22,9 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   });
 };
 
-// const store = configureStore({
-//   reducer: {
-//     authentication: authReducer,
-//     patients: patientReducer,
-//     patientDetails: patientDetailsReducer,
-//     dashboardReport: dashboardReportReducer,
-//   },
-// });
-
 const store: AppStore = setupStore();
 
 export default store;
-// export type AppStore = ReturnType<typeof setupStore>;
-// export type AppDispatch = typeof setupStore.dispatch;
-// export type RootState = ReturnType<typeof setupStore.getState>;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;

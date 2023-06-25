@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   GET_DASHBOARD_REPORT,
+  GET_HIGH_RISK_REPORT,
   GET_PATIENT_DATA_API,
   GET_PATIENT_DETAILS_DATA_API,
 } from "../../common/url";
@@ -73,6 +74,31 @@ export interface PatientDetails {
   observations?: any;
 }
 
+export interface HighRiskPatient {
+  patient_firstname: string;
+  patient_lastname: string;
+  patient_email: string;
+  patient_address1: string;
+  patient_number1: string;
+  patient_ssn: string;
+  is_criteria_observation: boolean;
+  is_criteria_practitioner_visited: boolean;
+  is_criteria_hospital_visited: boolean;
+}
+
+export interface HighRiskCoveredPractitioner {
+  id: string;
+  firstname: string;
+  lastname: string;
+  is_nurse: boolean;
+}
+
+export interface HighRiskObservationReport {
+  highRiskPatients: HighRiskPatient[];
+  highRiskCoveredPractitioners: HighRiskCoveredPractitioner[];
+  observations: Observation[];
+}
+
 const { token } = getAuth();
 
 export const getPatientList = createAsyncThunk<
@@ -123,7 +149,6 @@ export const getPatientDetails = createAsyncThunk<
     });
 
     const patients = await result.json();
-    console.log("patientDetails", patients);
     return patients;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -167,3 +192,27 @@ export const getDashboardReport = createAsyncThunk<
     }
   }
 );
+
+export const getHighRiskReport = createAsyncThunk<
+  HighRiskObservationReport,
+  {},
+  { rejectValue: FetchPatientsError }
+>("patient/getHighRiskReport", async ({}, { rejectWithValue }) => {
+  try {
+    const result = await fetch(GET_HIGH_RISK_REPORT, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+
+    const report = await result.json();
+    return report;
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue({ message: error.message });
+    }
+    return rejectWithValue({ message: "An error occurred" });
+  }
+});

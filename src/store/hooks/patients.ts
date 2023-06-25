@@ -61,3 +61,23 @@ export const useDashboardData = () => {
 
   return { error: errorData, status: statusData, data: dashboardData };
 };
+
+export const useHighRiskReportData = () => {
+  const { error, status, data } = useSelector((state: RootState) => {
+    return {
+      error: state.highRiskReport.error,
+      data: state.highRiskReport.data,
+      status: state.highRiskReport.status,
+    };
+  });
+
+  const {
+    error: errorData,
+    status: statusData,
+    data: highRiskReport,
+  } = useMemo(() => {
+    return { error, status, data };
+  }, [error, data, status]);
+
+  return { error: errorData, status: statusData, data: highRiskReport };
+};
