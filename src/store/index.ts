@@ -6,7 +6,6 @@ import { dashboardReportReducer } from "./slices/dashboardReport";
 
 import type { PreloadedState } from "@reduxjs/toolkit";
 
-// Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
   authentication: authReducer,
   patients: patientReducer,
@@ -30,7 +29,9 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 //   },
 // });
 
-export default setupStore;
+const store: AppStore = setupStore();
+
+export default store;
 // export type AppStore = ReturnType<typeof setupStore>;
 // export type AppDispatch = typeof setupStore.dispatch;
 // export type RootState = ReturnType<typeof setupStore.getState>;

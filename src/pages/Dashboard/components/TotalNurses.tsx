@@ -1,4 +1,3 @@
-import ListBulletIcon from "@heroicons/react/24/solid/ListBulletIcon";
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon";
 import {
   Avatar,

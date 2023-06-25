@@ -1,10 +1,10 @@
 import DashboardPage from "../Dashboard";
 import * as patientHooks from "../../../store/hooks/patients";
 import { DashboardReport } from "@store/thunks/patient";
-import { renderWithProviders } from "../../../store/test-utils";
-import { mockDashboardData } from "./DashboardMockData";
-import "../../../common/testSetup";
-import "jest-canvas-mock";
+import { renderWithProviders } from "../../../test-utils/test-utils";
+import { mockDashboardData } from "../../../test-utils/DashboardMockData";
+import "../../../test-utils/testSetup";
+// import "jest-canvas-mock";
 
 jest.mock("../../../store/hooks/patients");
 jest.mock("react-chartjs-2", () => {
@@ -18,6 +18,7 @@ jest.mock("react-chartjs-2", () => {
 });
 describe("DashboardPage", () => {
   it("should render the dashboard page with correct data", () => {
+    // Arrange
     const mockDashboardObj: DashboardReport = mockDashboardData;
 
     jest.spyOn(patientHooks, "useDashboardData").mockReturnValue({
@@ -26,7 +27,8 @@ describe("DashboardPage", () => {
       status: "idle",
     });
 
-    const { getByText, getByTestId } = renderWithProviders(<DashboardPage />);
+    // Act
+    const { getByText } = renderWithProviders(<DashboardPage />);
 
     expect(getByText("Total Patients")).toBeInTheDocument();
     expect(getByText("Total Practitioners")).toBeInTheDocument();

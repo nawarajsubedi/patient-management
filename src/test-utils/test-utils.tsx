@@ -4,7 +4,7 @@ import type { RenderOptions } from "@testing-library/react";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
-import { setupStore, type AppStore, type RootState } from ".";
+import { setupStore, type AppStore, type RootState } from "../store";
 import { BrowserRouter } from "react-router-dom";
 
 // This type interface extends the default options for render from RTL, as well
