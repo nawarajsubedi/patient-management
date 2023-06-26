@@ -2,21 +2,11 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 
 import Layout from "../../component/layout";
-import {
-  getDashboardReport,
-  getHighRiskReport,
-} from "../../store/thunks/patient";
+import { getHighRiskReport } from "../../store/thunks/patient";
 import { useHighRiskReportData } from "../../store/hooks/patients";
-import { TotalObservationsCard } from "./components/TotalObservations";
-import { TotalPatients } from "./components/TotalPatients";
-import { TotalPractitioners } from "./components/TotalPractitioners";
-import { TotalNurses } from "./components/TotalNurses";
-import { PractitionerByPatientChart } from "./components/PractitionerByPatientChart";
-import { NurseByPatientChart } from "./components/NurseByPatientChart";
-import { MedicationByPatientChart } from "./components/MedicationByPatientChart";
 import { HighRiskPatientTable } from "./components/HighRiskPatients";
 import { HighRiskObservations } from "./components/HighRiskObservations";
 
@@ -29,7 +19,6 @@ const RiskReportPage = () => {
 
   const { data, error, status } = useHighRiskReportData();
 
-  // console.log("data---------------", data);
   return (
     <>
       <Helmet>
@@ -72,26 +61,7 @@ const RiskReportPage = () => {
                     onPageChange={() => {}}
                   />
                 </Grid>
-                {/* 
-                <Grid item xs={12} lg={8} sx={{ margin: "16px 16px 0 0" }}>
-                  <MedicationByPatientChart data={data.medicationByPatient} />
-                </Grid> */}
               </Box>
-
-              {/* <Grid
-                item
-                xs={12}
-                md={12}
-                lg={8}
-                sx={{ margin: "16px 16px 0 0" }}
-              >
-                <PatientSummaryTable
-                  data={data.patients}
-                  title="Patients with Last Medication"
-                  showLastMedication
-                  sx={{ height: "100%" }}
-                />
-              </Grid> */}
             </Grid>
           </Container>
         </Box>

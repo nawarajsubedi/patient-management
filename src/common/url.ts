@@ -6,7 +6,8 @@ const GET_PATIENT_DATA_API = `${API_URL}/patients`;
 const GET_PATIENT_DETAILS_DATA_API = `${API_URL}/patients/{patientId}`;
 const GET_DASHBOARD_REPORT = `${API_URL}/patients/dashboard`;
 const GET_HIGH_RISK_REPORT = `${API_URL}/patients/high-risk-patient`;
-const UPLOAD_CSV_FILE_URL = `${API_URL}/patients/upload-csv`;
+const UPLOAD_CSV_FILE_URL = `${API_URL}/etl/csv-upload`;
+
 export {
   LOGIN_URL,
   SIGNUP_URL,
