@@ -63,6 +63,7 @@
   "devDependencies": {
     "@types/react-helmet": "^6.1.6",
     "@vitejs/plugin-react": "^4.0.0",
+    "@playwright/test": "^1.25.2",
     "babel-jest": "29.5.0",
     "jest-canvas-mock": "^2.5.1",
     "vite": "^4.3.3"
