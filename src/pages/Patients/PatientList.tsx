@@ -7,7 +7,7 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import CSVUpload from "./CSVUpload";
 import Layout from "../../component/layout";
 import { getPatientList } from "../../store/thunks/patient";
-import { PatientTable } from "../../component/common/table/patientTable";
+import { PatientTable } from "../../component/common/table/PatientTable";
 import { usePatientData } from "../../store/hooks/patients";
 
 const PatientListPage = () => {
